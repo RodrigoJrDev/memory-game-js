@@ -1,29 +1,16 @@
 <?php
 
-define('HOST', 'localhost');
-define('USER', 'root');
-define('PASS', '');
-define('DBNAME', 'rodrigojrdev_memorygamebd');
-define('PORT', '3306');
+require_once '../conexao-mysql/conexao.php';
 
+try {
 
-print_r($_POST);
+  $query = $pdo->prepare('SELECT * FROM rodrigojrdev_memorygamebd.player_score ORDER BY time ASC LIMIT 10');
+  $query->execute();
 
-//Criar a conexão com banco de dados usando o PDO e a porta do banco de dados
-//Utilizar o Try/Catch para verificar a conexão.
-
-
-// try {
-//   $pdo = new PDO('mysql:host=' . HOST . ';port=' . PORT . ';dbname=' . DBNAME, USER, PASS);
-//   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-//   $stmt = $pdo->prepare('INSERT INTO rodrigojrdev_memorygamebd.player_score (name_player) VALUES(:nome)');
-//   $stmt->execute(array(':nome' => 'Rodrigo'));
-
-//   echo $stmt->rowCount();
-// } catch (PDOException $e) {
-//   echo 'Error: ' . $e->getMessage();
-// }
+  $result = $query->fetchAll();
+} catch (PDOException $e) {
+  echo 'Error: ' . $e->getMessage();
+}
 
 ?>
 
@@ -37,12 +24,35 @@ print_r($_POST);
 
   <link rel="stylesheet" href="../css/reset.css" />
   <link rel="stylesheet" href="../css/game.css" />
+  <link rel="stylesheet" href="../css/score.css" />
 
   <title>Memory Game | Score </title>
 </head>
 
 <body>
-
+  <main>
+    <div class="ranking-game">
+      <h2>Top 10 Ranking</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Top</th>
+            <th>Usuário</th>
+            <th>Tempo</th>
+          </tr>
+        </thead>
+        <?php $i = 0;
+        foreach ($result as $key => $value) { ?>
+          <?php $i++; ?>
+          <tr>
+            <th><?php echo $i; ?></th>
+            <th><?php echo $value['name'] ?></th>
+            <th><?php echo $value['time'] ?></th>
+          </tr>
+        <?php } ?>
+      </table>
+    </div>
+  </main>
 </body>
 
 </html>
