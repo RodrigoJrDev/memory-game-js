@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/game.css" />
 
     <script defer src="../js/game.js"></script>
+    <script src="../js/jquery-3.6.0.min.js"></script>
 
     <title>Memory Game</title>
   </head>
@@ -20,11 +21,33 @@
         <span>Tempo: <span class="timer">00</span></span>
       </header>
       <div class="grid"></div>
-      <form action="score.php" method="post">
-        <input type="text" name="name" value="Rodrigo" />
-        <input type="text" name="time" value="10" />
-        <input type="submit" value="Enviar" />
-      </form>
+      <div class="cadastrar-tempo">
+        <form id="form-cadastrar" method="GET">
+          <input class="name-player" type="text" name="name" value="Rodrigo" />
+          <input class="timer-score" type="number" name="time" value="5" />
+          <input type="submit" class="btn-cadastrar-score" value="Enviar" />
+        </form>
+      </div>
     </main>
+
+    <script>
+      $(function () {
+        $(".btn-cadastrar-score").click(function (e) {
+          $.ajax({
+            type: "POST",
+            url: "../cadastrar/cadastro-ajax.php",
+            data: $("form").serializeArray(),
+            dataType: "json",
+            success: function (data) {
+              if (data.status) {
+              } else {
+              }
+            },
+            error: function () {},
+          });
+          e.preventDefault();
+        });
+      });
+    </script>
   </body>
 </html>
