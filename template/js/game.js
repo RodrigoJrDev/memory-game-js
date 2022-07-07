@@ -26,9 +26,12 @@ let secondCard = "";
 
 const checkEndGame = () => {
   const disabledCards = document.querySelectorAll(".disable-card");
-  console.log(disabledCards.length);
   if (disabledCards.length == 20) {
     localStorage.setItem("tempo", timer.innerHTML);
+    var nameSave = document.querySelector(".name-player");
+    var timerSave = document.querySelector(".timer-score");
+    nameSave.value = localStorage.getItem("player");
+    timerSave.value = timer.innerHTML;
     clearInterval(this.loop);
     alert(
       `Parabéns, ${spanPlayer.innerHTML}! Seu tempo foi: ${timer.innerHTML}`
@@ -100,19 +103,10 @@ const loadGame = () => {
   });
 };
 
-// function time_convert(num) {
-//   var hours = Math.floor(num / 60);
-//   var minutes = num % 60;
-//   return hours + ":" + minutes;
-// }
-
 const startTimer = () => {
   this.loop = setInterval(() => {
     const currentTime = +timer.innerHTML;
     timer.innerHTML = currentTime + 1;
-    // if (currentTime > 5) {
-    //   timer.innerHTML = time_convert(currentTime);
-    // }
   }, 1000);
 };
 
