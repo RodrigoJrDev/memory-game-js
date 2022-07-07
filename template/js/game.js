@@ -28,6 +28,7 @@ const checkEndGame = () => {
   const disabledCards = document.querySelectorAll(".disable-card");
   console.log(disabledCards.length);
   if (disabledCards.length == 20) {
+    localStorage.setItem("tempo", timer.innerHTML);
     clearInterval(this.loop);
     alert(
       `Parabéns, ${spanPlayer.innerHTML}! Seu tempo foi: ${timer.innerHTML}`
@@ -62,7 +63,6 @@ const revealCard = ({ target }) => {
   if (target.parentNode.className.includes("reveal-card")) {
     return;
   }
-
   if (firstCard === "") {
     target.parentNode.classList.add("reveal-card");
     firstCard = target.parentNode;
